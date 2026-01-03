@@ -1,4 +1,5 @@
-import { memo } from "react";
+import { memo, useState } from "react";
+import { RiCircleFill } from "@remixicon/react";
 import { useAuth } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 import type { MessageType } from "@/types/chat.type";
@@ -6,6 +7,8 @@ import AvatarWithBadge from "../avatar-with-badge";
 import { formatChatTime } from "@/lib/helper";
 import { Button } from "../ui/button";
 import { ReplyIcon } from "lucide-react";
+import ImagePreviewModal from "./ImagePreviewModal";
+import { MessageResponse } from "../ai-elements/message";
 
 interface Props {
   message: MessageType;
@@ -13,6 +16,7 @@ interface Props {
 }
 const ChatMessageBody = memo(({ message, onReply }: Props) => {
   const { user } = useAuth();
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const userId = user?._id || null;
   const isCurrentUser = message.sender?._id === userId;
@@ -93,11 +97,21 @@ const ChatMessageBody = memo(({ message, onReply }: Props) => {
               <img
                 src={message?.image || ""}
                 alt=""
-                className="rounded-lg max-w-xs"
+                className="rounded-lg max-w-xs cursor-pointer hover:opacity-90 transition"
+                onClick={() => setPreviewImage(message.image)}
               />
             )}
 
-            {message.content && <p>{message.content}</p>}
+            {message.content && (
+              <MessageResponse>{message.content}</MessageResponse>
+            )}
+            {message?.streaming && (
+              <span>
+                <span>
+                  <RiCircleFill className="w-4 h-4 animate-bounce rounded-full  dark:text-white mt-1" />
+                </span>
+              </span>
+            )}
           </div>
 
           {/* {Reply Icon Button} */}
@@ -126,6 +140,12 @@ const ChatMessageBody = memo(({ message, onReply }: Props) => {
           >
             {message.status}
           </span>
+        )}
+        {previewImage && (
+          <ImagePreviewModal
+            src={previewImage}
+            onClose={() => setPreviewImage(null)}
+          />
         )}
       </div>
     </div>

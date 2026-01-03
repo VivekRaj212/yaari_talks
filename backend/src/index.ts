@@ -12,7 +12,6 @@ import { errorHandler } from "./middlewares/errorHandler.middleware";
 import connectDatabase from "./config/database.config";
 import { initializeSocket } from "./lib/socket";
 import routes from "./routes";
-
 import "./config/passport.config";
 
 const app = express();

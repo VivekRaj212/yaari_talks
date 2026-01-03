@@ -15,12 +15,14 @@ interface Props {
   chatId: string | null;
   currentUserId: string | null;
   replyTo: MessageType | null;
+  isAIChat?: boolean;
   onCancelReply: () => void;
 }
 const ChatFooter = ({
   chatId,
   currentUserId,
   replyTo,
+  isAIChat,
   onCancelReply,
 }: Props) => {
   const messageSchema = z.object({
@@ -70,7 +72,7 @@ const ChatFooter = ({
       replyTo: replyTo,
     };
     //Send Message
-    sendMessage(payload);
+    sendMessage(payload, isAIChat);
 
     onCancelReply();
     handleRemoveImage();

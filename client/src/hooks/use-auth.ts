@@ -33,6 +33,7 @@ export const useAuth = create<AuthState>()((set) => ({
       useSocket.getState().connectSocket();
       toast.success("Register successfully");
     } catch (err: any) {
+      console.log("err", err);
       toast.error(err.response?.data?.message || "Register failed");
     } finally {
       set({ isSigningUp: false });

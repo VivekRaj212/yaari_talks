@@ -23,7 +23,7 @@ const EmptyState = ({
     >
       <EmptyHeader>
         <EmptyMedia variant="icon">
-          <Logo showText={false} />
+          <Logo showText={false}/>
         </EmptyMedia>
         <EmptyTitle>{title}</EmptyTitle>
         <EmptyDescription>{description}</EmptyDescription>
