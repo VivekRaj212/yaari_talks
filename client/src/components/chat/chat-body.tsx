@@ -9,6 +9,13 @@ interface Props {
   messages: MessageType[];
   onReply: (message: MessageType) => void;
 }
+
+interface AIStreamEvent {
+  chatId: string;
+  chunk: string;
+  done: boolean;
+  message: MessageType;
+}
 const ChatBody = ({ chatId, messages, onReply }: Props) => {
   const { socket } = useSocket();
   const { addNewMessage, addOrUpdateMessage } = useChat();
@@ -35,7 +42,7 @@ const ChatBody = ({ chatId, messages, onReply }: Props) => {
       chunk,
       done,
       message,
-    }: any) => {
+    }: AIStreamEvent) => {
       if (streamChatId !== chatId) return;
       const lastMsg = messages.at(-1);
       if (!lastMsg?._id && lastMsg?.streaming) return;
