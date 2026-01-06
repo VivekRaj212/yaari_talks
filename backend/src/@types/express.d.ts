@@ -1,7 +1,11 @@
+/// <reference types="express" />
+
 import type { UserDocument } from "../models/user.model";
 
-declare module 'express-serve-static-core' {
-  interface Request {
-    user?: UserDocument;
+declare global {
+  namespace Express {
+    interface Request {
+      user?: UserDocument;
+    }
   }
 }
