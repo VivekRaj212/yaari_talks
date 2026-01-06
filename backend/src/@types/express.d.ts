@@ -1,11 +1,15 @@
-/// <reference types="express" />
+// import { UserDocument } from "../models/user.model";
 
-import type { UserDocument } from "../models/user.model";
+// declare global {
+//   namespace Express {
+//     interface User extends UserDocument {
+//       _id?: any;
+//     }
+//   }
+// }
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: UserDocument;
-    }
+declare namespace Express {
+  interface Request {
+    user?: import("../models/user.model").UserDocument;
   }
 }
