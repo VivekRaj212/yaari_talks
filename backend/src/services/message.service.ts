@@ -154,6 +154,7 @@ async function getAIResponse(chatId: string, userId: string) {
       done: false,
       message: null,
     });
+    console.log("AI STREAM CHUNK:", chunk);
     fullResponse += chunk;
   }
   if (!fullResponse.trim()) return "";
@@ -171,13 +172,9 @@ async function getAIResponse(chatId: string, userId: string) {
     chunk: null,
     sender: whopAI,
     done: true,
-    message: aiMessage
-  })
-  emitLastMessageToParticipants(
-    [userId],
-    chatId,
-    aiMessage
-  );
+    message: aiMessage,
+  });
+  emitLastMessageToParticipants([userId], chatId, aiMessage);
   return aiMessage;
 }
 
